@@ -35,12 +35,14 @@ public class Link implements Serializable {
             this.valid = true;
         else
             this.valid = false;
-
     }
 
     private boolean doesURLExist()
     {
         URL u = null;
+        if (url.startsWith("/"))
+            return false;
+        int i;
 
         try {
             u = new URL(url);
@@ -55,17 +57,19 @@ public class Link implements Serializable {
         }
 
         // We want to check the current URL
-        HttpURLConnection.setFollowRedirects(false);
+        //HttpURLConnection.setFollowRedirects(false);
 
         HttpURLConnection httpURLConnection = null;
         try {
+
             httpURLConnection = (HttpURLConnection) u.openConnection();
             // We don't need to get data
             httpURLConnection.setRequestMethod("HEAD");
             int responseCode = httpURLConnection.getResponseCode();
 
             // We only accept response code 200
-            return responseCode == HttpURLConnection.HTTP_OK;
+            // return responseCode == HttpURLConnection.HTTP_OK;
+            return (responseCode >= 200 && responseCode < 500);      // suppose response code in range 200-500 is valid
         } catch (IOException e) {
             return false;
         }

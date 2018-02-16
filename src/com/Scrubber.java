@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 
 public class Scrubber {
 
-    Set<Link> links;
+    private Set<Link> links;
 
     public Scrubber(){
         links = new HashSet<>();
@@ -40,6 +40,7 @@ public class Scrubber {
             next.setValid();
             links.add(next);      //  access the link part
         }
+        System.out.println("Found " + links.size() + " links");
     }
 
     public boolean saveToFile(String filename) {
@@ -59,6 +60,7 @@ public class Scrubber {
         return true;
     }
 
+    @SuppressWarnings("unchecked")
     public boolean loadFromFile(String filename){
         if(filename.isEmpty())
             return false;
@@ -72,11 +74,8 @@ public class Scrubber {
         }
 
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename))){
-
             links = (HashSet<Link>) ois.readObject();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         return true;
@@ -93,7 +92,7 @@ public class Scrubber {
         }
     }
 
-    public String getTextFromHtml(String url) throws Exception {
+    private String getTextFromHtml(String url) throws Exception {
         URL website = new URL(url);
         URLConnection connection = website.openConnection();
         BufferedReader in = new BufferedReader(

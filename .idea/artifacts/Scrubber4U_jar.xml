@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="Scrubber4U:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Scrubber4U_jar</output-path>
+    <root id="archive" name="Scrubber4U.jar">
+      <element id="module-output" name="Scrubber4U" />
+    </root>
+  </artifact>
+</component>
