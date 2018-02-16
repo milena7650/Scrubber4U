@@ -31,10 +31,7 @@ public class Link implements Serializable {
     }
 
     public void setValid() {
-        if(doesURLExist())
-            this.valid = true;
-        else
-            this.valid = false;
+        this.valid = doesURLExist() ? true : false;
     }
 
     private boolean doesURLExist()
@@ -42,7 +39,6 @@ public class Link implements Serializable {
         URL u = null;
         if (url.startsWith("/"))
             return false;
-        int i;
 
         try {
             u = new URL(url);
@@ -61,7 +57,6 @@ public class Link implements Serializable {
 
         HttpURLConnection httpURLConnection = null;
         try {
-
             httpURLConnection = (HttpURLConnection) u.openConnection();
             // We don't need to get data
             httpURLConnection.setRequestMethod("HEAD");

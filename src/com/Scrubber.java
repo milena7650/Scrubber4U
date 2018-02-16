@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
 public class Scrubber {
 
     private Set<Link> links;
+    private final static String FILE_EXT = ".ser";
 
     public Scrubber(){
         links = new HashSet<>();
@@ -49,8 +50,8 @@ public class Scrubber {
         if(links.isEmpty())
             return false;
         // When serializing an object to a file, the standard convention in Java is to give the file a .ser extension.
-        if(!filename.contains(".ser"))
-            filename += ".ser";
+        if (!filename.contains(FILE_EXT))
+            filename += FILE_EXT;
       try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename))){
             oos.writeObject(links);
         } catch (IOException e) {
@@ -64,8 +65,8 @@ public class Scrubber {
     public boolean loadFromFile(String filename){
         if(filename.isEmpty())
             return false;
-        if(!filename.contains(".ser"))
-            filename += ".ser";
+        if (!filename.contains(FILE_EXT))
+            filename += FILE_EXT;
 
         File f = new File(filename);
         if(!f.exists()){
